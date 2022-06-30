@@ -19,8 +19,16 @@
  * @property {Product} drink - Bebida deseada para el combo
  */
 
+const allProductsInCart = []
+const primaryFoods = document.querySelector('#primary-foods')
+const accompanimentsWrapper = document.querySelector('#accompaniments')
+const drinksWrapper = document.querySelector('#drinks')
+
+const cart = document.querySelector('#order-cart')
+const cartTotalPrice = document.querySelector('#totalPrice')
+
 /** @type {Product[]} */
-const products = [
+const allProducts = [
   // Hamburgesas
   {
     id: '1',
@@ -95,6 +103,12 @@ const products = [
   }
 ]
 
+let products = JSON.parse(localStorage.getItem('products')) || null
+if (!products) {
+  products = allProducts
+  localStorage.setItem('products', JSON.stringify(allProducts))
+}
+
 /** Renderiza la tarjeta de un producto en base a sus atributos
  * @param {Product} product
  * @returns {HTMLElement} Tarjeta lista para ser renderizada
@@ -127,6 +141,7 @@ const renderCartProduct = (productDetails, comboDetails) => {
   product.classList.add('order__product')
 
   let productComboInformation
+  // Renderiza los datos escenciales para cualquier producto
   if (comboDetails !== undefined) {
     productComboInformation = `
         <div class="order__product__combo">
@@ -136,6 +151,7 @@ const renderCartProduct = (productDetails, comboDetails) => {
       `
   }
 
+  // Renderiza el acompañamiento y bebida para el combo
   product.innerHTML = `
     <img src="imgs/${productDetails.img}" alt="${productDetails.name}">
     <div class="order__product__information">
@@ -148,27 +164,88 @@ const renderCartProduct = (productDetails, comboDetails) => {
   return product
 }
 
-// Programa Principal
-const primaryFoods = document.querySelector('#primary-foods')
-const cart = document.querySelector('#order-cart')
+const renderProductsInSpecificBox = (htmlElement, products, productHandler) => {
+  htmlElement.innerHTML = ''
+  products.forEach(products => {
+    const productCard = renderProductCard(products, productHandler)
+    htmlElement.appendChild(productCard)
+  })
+}
 
-const productHandler = (id) => {
+/** Calcula el precio total de los productos pedidos teniendo en cuenta el combo, devuelve un objeto listo para la funcion renderCartProduct
+ * @param {Product} food - Producto principal pedido
+ * @param {Product} accompaniment - Acompañamiento pedido
+ * @param {Product} drink - Bebida pedida
+ * @param {boolean} isResized - Indica si el producto fue aumentado
+ */
+const calculateComboToRender = (food, accompaniment, drink, isResized) => {
+  const foodPrice = food.price
+  const accompanimentPrice = accompaniment.priceInCombo
+  const drinkPrice = drink.priceInCombo
+
+  let totalPrice = foodPrice + accompanimentPrice + drinkPrice
+  let finalName = `${food.name} con ${accompaniment.name} y ${drink.name}`
+
+  if (isResized) {
+    totalPrice += 150
+    finalName += ' (Aumentado)'
+  }
+
+  return [{ ...food, name: finalName, price: totalPrice }, { accompaniment, drink }]
+}
+
+/** Renderiza la tarjeta de un producto pedido basado en el id del producto
+ * @param {number} id - Identificador del producto
+ */
+const createFoodOrder = (id) => {
   let isInCombo = false
-  let comboOption
 
   const product = products.find(p => p.id === id)
   if (product.isAbleToCombo !== undefined) {
     isInCombo = confirm(`Quiere agregar el producto "${product.name}" en combo?`)
   }
 
-  if (isInCombo) comboOption = { accompaniment: products[4], drink: products[5] }
+  if (isInCombo) {
+    const accompaniments = products.filter(p => p.category === 'accompaniment')
+    const drinks = products.filter(p => p.category === 'drink')
 
-  // Una vez que seleccionamos un producto, se renderiza la selección en el carrito
-  const cartProduct = renderCartProduct(product, comboOption)
-  cart.appendChild(cartProduct)
+    const comboDetails = {}
+    primaryFoods.classList.add('hidden') // Esconde el selector de primario de comida
+    accompanimentsWrapper.classList.remove('hidden') // Muestra el selector de acompañamientos
+
+    // Al elegir un combo, se muestra el selector de accompanamientos
+    renderProductsInSpecificBox(accompanimentsWrapper, accompaniments, (id) => {
+      comboDetails.accompaniment = products.find(p => p.id === id)
+      accompanimentsWrapper.classList.add('hidden') // Esconde el selector de acompañamientos
+      drinksWrapper.classList.remove('hidden') // Muestra el selector de bebidas
+
+      // Una vez seleccionado el acompañamiento, se muestra el selector de bebidas
+      renderProductsInSpecificBox(drinksWrapper, drinks, (id) => {
+        comboDetails.drink = products.find(p => p.id === id)
+        drinksWrapper.classList.add('hidden') // Esconde el selector de bebidas
+        primaryFoods.classList.remove('hidden') // Muestra el selector de primario de comida
+
+        // Se pregunta si desea agrandar el combo
+        const isResized = confirm(`Quiere agrandar el combo "${product.name}"?`)
+        const calculatedCombo = calculateComboToRender(product, comboDetails.accompaniment, comboDetails.drink, isResized)
+
+        // Finalmente, se agrega el producto al carrito
+        allProductsInCart.push(calculatedCombo[0])
+        cart.appendChild(renderCartProduct(calculatedCombo[0], calculatedCombo[1]))
+
+        const allProductsInCartPrice = allProductsInCart.reduce((acc, curr) => acc + curr.price, 0)
+        cartTotalPrice.innerHTML = `Total: $${allProductsInCartPrice}`
+      })
+    })
+  } else {
+    allProductsInCart.push(product)
+    cart.appendChild(renderCartProduct(product))
+
+    const allProductsInCartPrice = allProductsInCart.reduce((acc, curr) => acc + curr.price, 0)
+    cartTotalPrice.innerHTML = `Total: $${allProductsInCartPrice}`
+  }
 }
 
-products.forEach(products => {
-  const productCard = renderProductCard(products, productHandler)
-  primaryFoods.appendChild(productCard)
-})
+// Programa Principal
+cartTotalPrice.innerHTML = 'Total: $0'
+renderProductsInSpecificBox(primaryFoods, products, createFoodOrder)
