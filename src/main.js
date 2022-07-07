@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 // JSDoc Types
 /** Definición de categorias de productos
  * @typedef {('dish'|'accompaniment'|'drink')} Category
@@ -194,16 +195,8 @@ const calculateComboToRender = (food, accompaniment, drink, isResized) => {
   return [{ ...food, name: finalName, price: totalPrice }, { accompaniment, drink }]
 }
 
-/** Renderiza la tarjeta de un producto pedido basado en el id del producto
- * @param {number} id - Identificador del producto
- */
-const createFoodOrder = (id) => {
-  let isInCombo = false
-
-  const product = products.find(p => p.id === id)
-  if (product.isAbleToCombo !== undefined) {
-    isInCombo = confirm(`Quiere agregar el producto "${product.name}" en combo?`)
-  }
+const addProductToCart = (product, isInCombo) => {
+  console.log('Adding product to cart')
 
   if (isInCombo) {
     const accompaniments = products.filter(p => p.category === 'accompaniment')
@@ -225,16 +218,23 @@ const createFoodOrder = (id) => {
         drinksWrapper.classList.add('hidden') // Esconde el selector de bebidas
         primaryFoods.classList.remove('hidden') // Muestra el selector de primario de comida
 
-        // Se pregunta si desea agrandar el combo
-        const isResized = confirm(`Quiere agrandar el combo "${product.name}"?`)
-        const calculatedCombo = calculateComboToRender(product, comboDetails.accompaniment, comboDetails.drink, isResized)
+        Swal.fire({
+          title: '¿Quiere agrandar el producto?',
+          icon: 'info',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si',
+          cancelButtonText: 'No'
+        }).then((result) => {
+          const calculatedCombo = calculateComboToRender(product, comboDetails.accompaniment, comboDetails.drink, result.isConfirmed)
+          // Finalmente, se agrega el producto al carrito
+          allProductsInCart.push(calculatedCombo[0])
+          cart.appendChild(renderCartProduct(calculatedCombo[0], calculatedCombo[1]))
 
-        // Finalmente, se agrega el producto al carrito
-        allProductsInCart.push(calculatedCombo[0])
-        cart.appendChild(renderCartProduct(calculatedCombo[0], calculatedCombo[1]))
-
-        const allProductsInCartPrice = allProductsInCart.reduce((acc, curr) => acc + curr.price, 0)
-        cartTotalPrice.innerHTML = `Total: $${allProductsInCartPrice}`
+          const allProductsInCartPrice = allProductsInCart.reduce((acc, curr) => acc + curr.price, 0)
+          cartTotalPrice.innerHTML = `Total: $${allProductsInCartPrice}`
+        })
       })
     })
   } else {
@@ -243,6 +243,32 @@ const createFoodOrder = (id) => {
 
     const allProductsInCartPrice = allProductsInCart.reduce((acc, curr) => acc + curr.price, 0)
     cartTotalPrice.innerHTML = `Total: $${allProductsInCartPrice}`
+  }
+}
+
+/** Renderiza la tarjeta de un producto pedido basado en el id del producto
+ * @param {number} id - Identificador del producto
+ */
+const createFoodOrder = (id) => {
+  // const isInCombo = false
+  console.log('Creating food order')
+
+  const product = products.find(p => p.id === id)
+  if (product.isAbleToCombo !== undefined) {
+    Swal.fire({
+      title: 'Producto disponible para combo!',
+      text: `Quiere agregar el producto "${product.name}" en combo?`,
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No'
+    }).then((result) => {
+      addProductToCart(product, result.isConfirmed)
+    })
+  } else {
+    addProductToCart(product)
   }
 }
 
