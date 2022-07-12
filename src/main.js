@@ -28,88 +28,6 @@ const drinksWrapper = document.querySelector('#drinks')
 const cart = document.querySelector('#order-cart')
 const cartTotalPrice = document.querySelector('#totalPrice')
 
-/** @type {Product[]} */
-const allProducts = [
-  // Hamburgesas
-  {
-    id: '1',
-    name: 'Doble Cuarto de Libra con Queso',
-    img: 'dclq.png',
-    price: 700,
-    isAbleToCombo: true,
-    category: 'dish'
-  },
-  {
-    id: '2',
-    name: 'Big Mac',
-    img: 'bm.png',
-    price: 890,
-    isAbleToCombo: true,
-    category: 'dish'
-  },
-  {
-    id: '3',
-    name: 'McNifica',
-    img: 'mn.png',
-    price: 500,
-    isAbleToCombo: true,
-    category: 'dish'
-  },
-  // Acompanamientos
-  {
-    id: '4',
-    name: 'Papas Fritas',
-    img: 'pf.png',
-    price: 200,
-    priceInCombo: 150,
-    category: 'accompaniment',
-    isAbleToResize: true
-  },
-  {
-    id: '5',
-    name: 'Papas Fritas con Cheddar y Bacon',
-    img: 'pfcb.png',
-    price: 250,
-    priceInCombo: 200,
-    category: 'accompaniment'
-  },
-
-  // Bebidas
-  {
-    id: '6',
-    name: 'Coca Cola',
-    img: 'cc.svg',
-    price: 200,
-    priceInCombo: 50,
-    category: 'drink',
-    isAbleToResize: true
-  },
-  {
-    id: '7',
-    name: 'Fanta',
-    img: 'ft.png',
-    price: 200,
-    priceInCombo: 50,
-    category: 'drink',
-    isAbleToResize: true
-  },
-  {
-    id: '8',
-    name: 'Sprite',
-    img: 'sp.png',
-    price: 200,
-    priceInCombo: 50,
-    category: 'drink',
-    isAbleToResize: true
-  }
-]
-
-let products = JSON.parse(localStorage.getItem('products')) || null
-if (!products) {
-  products = allProducts
-  localStorage.setItem('products', JSON.stringify(allProducts))
-}
-
 /** Renderiza la tarjeta de un producto en base a sus atributos
  * @param {Product} product
  * @returns {HTMLElement} Tarjeta lista para ser renderizada
@@ -274,4 +192,21 @@ const createFoodOrder = (id) => {
 
 // Programa Principal
 cartTotalPrice.innerHTML = 'Total: $0'
-renderProductsInSpecificBox(primaryFoods, products, createFoodOrder)
+
+// Obtiene los productos desde el local storage
+let products = JSON.parse(localStorage.getItem('products')) || null
+if (!products) { // Comprueba si existen los productos
+  // En caso de no existir, se obtienen los productos desde el servidor
+  fetch('./public/products.json')
+    .then(response => response.json())
+    .then(data => {
+      products = data
+      console.log('Getting products from server')
+      localStorage.setItem('products', JSON.stringify(products))
+      renderProductsInSpecificBox(primaryFoods, products, createFoodOrder)
+    }).then()
+    .catch(error => console.log(error))
+} else {
+  console.log('Getting products from local storage')
+  renderProductsInSpecificBox(primaryFoods, products, createFoodOrder)
+}
