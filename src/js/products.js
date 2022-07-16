@@ -61,26 +61,54 @@ async function renderProducts (element, products) {
   for (const product of products) {
     const productCard = ProductCard(product.name, product.price, product.img, product.name)
     productCard.addEventListener('click', async () => {
-      console.log(product)
+      if (product.isAbleToCombo) {
+        const swalResponse = await Swal.fire({
+          customClass: {
+            container: 'terminal-swal-container',
+            popup: 'terminal-swal-popup'
+          },
+          showClass: { popup: 'animate__animated animate__slideInUp animate__fast' },
+          hideClass: { popup: 'animate__animated animate__slideOutDown animate__fast' },
+          title: `Querés pedir '${product.name}' en combo?`,
+          icon: 'info',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si',
+          cancelButtonText: 'No',
+          target: document.getElementsByTagName('main')[0]
+        })
 
-      const swalResponse = await Swal.fire({
-        customClass: {
-          container: 'terminal-swal-container',
-          popup: 'terminal-swal-popup'
-        },
-        showClass: { popup: 'animate__animated animate__slideInUp animate__fast' },
-        hideClass: { popup: 'animate__animated animate__slideOutDown animate__fast' },
-        title: `Querés agregar '${product.name}' al carrito?`,
-        icon: 'info',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Si',
-        cancelButtonText: 'No',
-        target: document.getElementsByTagName('main')[0],
-        position: 'bottom-center'
-      })
-      console.log(swalResponse)
+        console.log({ swalResponse })
+
+        if (!swalResponse.isConfirmed) {
+          addProductToCart(product)
+        } else {
+          localStorage.setItem('combo', JSON.stringify(product))
+          document.location = './sides.html'
+        }
+      } else {
+        const swalResponse = await Swal.fire({
+          customClass: {
+            container: 'terminal-swal-container',
+            popup: 'terminal-swal-popup'
+          },
+          showClass: { popup: 'animate__animated animate__slideInUp animate__fast' },
+          hideClass: { popup: 'animate__animated animate__slideOutDown animate__fast' },
+          title: `Querés agregar '${product.name}' al carrito?`,
+          icon: 'info',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si',
+          cancelButtonText: 'No',
+          target: document.getElementsByTagName('main')[0]
+        })
+
+        if (swalResponse.isConfirmed) {
+          addProductToCart(product)
+        }
+      }
     })
 
     element.appendChild(productCard)
@@ -104,8 +132,55 @@ function markActive (markElementID) {
   activeElement.classList.add('selected')
 }
 
+function addProductToCart (product) {
+  // Obtiene y parsea el carrito desde localStorage
+  const cart = JSON.parse(localStorage.getItem('cart')) || []
+
+  // Verifica si el producto ya esta en el carrito
+  const productInCart = cart.find(item => item.name === product.name)
+
+  // Si el producto no esta en el carrito, lo agrega
+  if (!productInCart) {
+    const modifiedProduct = { ...product, quantity: 1 }
+    cart.push(modifiedProduct)
+  } else {
+    // Si el producto ya esta en el carrito, incrementa la cantidad
+    productInCart.quantity++
+  }
+
+  // Guarda el carrito en localStorage
+  localStorage.setItem('cart', JSON.stringify(cart))
+
+  console.log({ product, productInCart })
+}
+
 const listOfCategories = document.getElementById('categories_list')
 const listOfProducts = document.getElementById('product_list')
+
+const restartButton = document.getElementById('restart')
+restartButton.addEventListener('click', async () => {
+  const swalResponse = await Swal.fire({
+    customClass: {
+      container: 'terminal-swal-container',
+      popup: 'terminal-swal-popup'
+    },
+    showClass: { popup: 'animate__animated animate__slideInUp animate__fast' },
+    hideClass: { popup: 'animate__animated animate__slideOutDown animate__fast' },
+    title: 'Estás seguro de que querés descartar la orden?',
+    icon: 'info',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Si',
+    cancelButtonText: 'No',
+    target: document.getElementsByTagName('main')[0]
+  })
+
+  if (swalResponse.isConfirmed) {
+    localStorage.clear()
+    document.location = '../'
+  }
+})
 
 const App = async () => {
   // Obtiene los datos desde el JSON con los datos de los productos

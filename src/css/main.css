@@ -150,6 +150,8 @@ main footer {
 
   background-color: #27742d;
   color: #f9f5f5;
+
+  transition: .2s;
 }
 
 main footer.start {
@@ -162,6 +164,11 @@ main footer.start {
 
 main footer > img {
   height: 50px;
+}
+
+main footer.showCart {
+  flex: 1;
+  height: 100%;
 }
 
 /* Componentes */
@@ -259,4 +266,9 @@ main footer > img {
 .animate__fast {
   animation-duration: 0.2s !important;
   animation-timing-function: ease-in-out !important;
+}
+
+.disable {
+  cursor: not-allowed !important;
+  filter: grayscale(40%);
 }
