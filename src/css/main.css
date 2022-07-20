@@ -64,6 +64,11 @@ main header {
   padding: 20px;
 }
 
+main header.greenHeader {
+  background-color: #27742d;
+  color: #f9f5f5;
+}
+
 main .categories {
   display: flex;
   flex-direction: row;
@@ -150,8 +155,6 @@ main footer {
 
   background-color: #27742d;
   color: #f9f5f5;
-
-  transition: .2s;
 }
 
 main footer.start {
@@ -169,6 +172,38 @@ main footer > img {
 main footer.showCart {
   flex: 1;
   height: 100%;
+}
+
+.flex1 { flex: 1; height: 100%; display: flex; flex-direction: column; }
+
+.contentWrapper {
+  flex: 1;
+  width: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: top;
+  gap: 10px;
+}
+
+.actionWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+  align-self: flex-end;
+  gap: 10px;
+
+  font-size: 1.2rem;
+}
+
+.button.square {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  cursor: pointer;
+
+  font-size: 1.2rem;
 }
 
 /* Componentes */

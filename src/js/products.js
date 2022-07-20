@@ -61,53 +61,25 @@ async function renderProducts (element, products) {
   for (const product of products) {
     const productCard = ProductCard(product.name, product.price, product.img, product.name)
     productCard.addEventListener('click', async () => {
-      if (product.isAbleToCombo) {
-        const swalResponse = await Swal.fire({
-          customClass: {
-            container: 'terminal-swal-container',
-            popup: 'terminal-swal-popup'
-          },
-          showClass: { popup: 'animate__animated animate__slideInUp animate__fast' },
-          hideClass: { popup: 'animate__animated animate__slideOutDown animate__fast' },
-          title: `Querés pedir '${product.name}' en combo?`,
-          icon: 'info',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Si',
-          cancelButtonText: 'No',
-          target: document.getElementsByTagName('main')[0]
-        })
+      const swalResponse = await Swal.fire({
+        customClass: {
+          container: 'terminal-swal-container',
+          popup: 'terminal-swal-popup'
+        },
+        showClass: { popup: 'animate__animated animate__slideInUp animate__fast' },
+        hideClass: { popup: 'animate__animated animate__slideOutDown animate__fast' },
+        title: `Querés agregar '${product.name}' al carrito?`,
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si',
+        cancelButtonText: 'No',
+        target: document.getElementsByTagName('main')[0]
+      })
 
-        console.log({ swalResponse })
-
-        if (!swalResponse.isConfirmed) {
-          addProductToCart(product)
-        } else {
-          localStorage.setItem('combo', JSON.stringify(product))
-          document.location = './sides.html'
-        }
-      } else {
-        const swalResponse = await Swal.fire({
-          customClass: {
-            container: 'terminal-swal-container',
-            popup: 'terminal-swal-popup'
-          },
-          showClass: { popup: 'animate__animated animate__slideInUp animate__fast' },
-          hideClass: { popup: 'animate__animated animate__slideOutDown animate__fast' },
-          title: `Querés agregar '${product.name}' al carrito?`,
-          icon: 'info',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Si',
-          cancelButtonText: 'No',
-          target: document.getElementsByTagName('main')[0]
-        })
-
-        if (swalResponse.isConfirmed) {
-          addProductToCart(product)
-        }
+      if (swalResponse.isConfirmed) {
+        addProductToCart(product)
       }
     })
 
@@ -132,6 +104,19 @@ function markActive (markElementID) {
   activeElement.classList.add('selected')
 }
 
+function updateCheckOut () {
+  const cart = JSON.parse(localStorage.getItem('cart')) || []
+
+  const totalProducts = cart.reduce((acc, item) => { return acc + item.quantity }, 0)
+  const totalPrice = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0)
+
+  const checkPrice = document.getElementById('check-price')
+  checkPrice.textContent = `$${totalPrice}`
+
+  const checkProducts = document.getElementById('check-products')
+  checkProducts.textContent = `Confirmar (${totalProducts} Items)`
+}
+
 function addProductToCart (product) {
   // Obtiene y parsea el carrito desde localStorage
   const cart = JSON.parse(localStorage.getItem('cart')) || []
@@ -150,8 +135,9 @@ function addProductToCart (product) {
 
   // Guarda el carrito en localStorage
   localStorage.setItem('cart', JSON.stringify(cart))
+  updateCheckOut()
 
-  console.log({ product, productInCart })
+  console.log({ cart })
 }
 
 const listOfCategories = document.getElementById('categories_list')
@@ -203,6 +189,7 @@ const App = async () => {
   // Selecciona las hamburguesas como categoria por defecto
   markActive('hamburgers')
   renderProducts(listOfProducts, products[0].products)
+  updateCheckOut()
 }
 
 (async () => {

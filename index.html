@@ -10,19 +10,20 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="./src/css/main.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
+    <link rel="stylesheet" href="./src/css/styles.css">
   </head>
   <body>
     <img src="./public/images/order_terminal.logo.black.svg" alt="">
-    <main>
-      <a href="./views/order.html">
-        <img class="hero" src="./public/images/terminal_wallpaper.jpg" alt="Terminal Wallpaper">
-        <footer class="start">
+    <a class="terminal" href="./views/order.html">
+      <img class="terminal__hero" src="./public/images/terminal_wallpaper.jpg" alt="Terminal Wallpaper">
+      <footer class="terminal__footer">
+        <div class="terminal__footer__start">
           <img src="./public/images/mcdonalds.isotype.svg" alt="Isotipo McDonald’s">
           <h2>Toca para comenzar</h2>
-        </footer>
-      </a>
-    </main>
+        </div>
+      </footer>
+    </a>
     <p>Esta pagina web intenta emular el funcionamiento de una terminal de autoservicio de McDonald’s.
     Es por ello que tambien se intenta emular el tamaño de la pantalla de la misma</p>
   </body>

@@ -1,0 +1,158 @@
+:root {
+  --colors-green: #27742d;
+  --colors-white: #F9F5F5;
+  --colors-yellow: #FEC208;
+  --colors-black: #1A1A1A;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box !important;
+  text-decoration: none;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  height: 100vh;
+  padding: 20px;
+}
+
+body > p {
+  font-size: .85rem;
+  font-style: italic;
+  font-family: "Outfit";
+
+  text-align: center;
+  white-space: pre-wrap;
+}
+
+/* Terminal Styles */
+.terminal {
+  position: relative;
+
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 78px 1fr 110px;
+
+  height: 100%;
+  aspect-ratio: 9/16;
+
+  border: 3px solid #E5E5E5;
+  box-shadow: 0px 4px 32px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+
+  overflow: hidden;
+}
+
+.terminal .terminal__hero {
+  grid-column: 1/-1;
+  grid-row: 1/3;
+
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+/* Header content styles */
+.terminal .terminal__header {
+  grid-column: 1/-1;
+  grid-row: 1/2;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Footer content styles */
+.terminal .terminal__footer {
+  grid-column: 1/-1;
+  grid-row: 3/4;
+
+  display: flex;
+  justify-content: space-between;
+
+  background-color: var(--colors-green);
+
+  padding: 20px;
+}
+
+.terminal .terminal__footer .terminal__footer__start {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  
+  height: 100%;
+  gap: 35px;
+
+  padding: 20px;
+}
+
+.terminal .terminal__footer .terminal__footer__start img{
+  height: 100%;
+}
+
+.terminal .terminal__footer .terminal__footer__start h2 {
+  font-size: 1.625rem;
+  font-weight: bold;
+  font-family: "Outfit";
+
+  color: var(--colors-white);
+}
+
+/* Component styles */
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-family: "Outfit";
+  font-size: 0.975rem;
+  padding: 10px;
+
+  background-color: var(--colors-green);
+  color: var(--colors-white);
+
+  border: none;
+  border-radius: 10px;
+
+  cursor: pointer;
+}
+
+.button.secondary {
+  background-color: var(--colors-white);
+  color: var(--colors-black);
+}
+
+.button.tertiary {
+  background-color: var(--colors-yellow);
+  color: var(--colors-black);
+}
+
+.button.square {
+  font-size: 1.625rem;
+  aspect-ratio: 1 / 1 ;
+}
+
+.button.pay {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.button.pay > h3 {
+  font-size: 1.125rem;
+  font-weight: bold;
+  font-family: "Outfit";
+}
+
+.button.pay > p {
+  font-size: 1rem;
+  font-family: "Outfit";
+  font-style: italic;
+}
