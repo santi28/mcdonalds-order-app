@@ -10,31 +10,100 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@iconscout/unicons@4.0.1/css/line.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.0.0/animate.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
+    <link rel="stylesheet" href="../src/css/styles.css">
 
-    <link rel="stylesheet" href="../src/css/main.css">
-
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   </head>
   <body>
     <img src="../public/images/order_terminal.logo.black.svg" alt="">
-    <main>
-      <header class="greenHeader">
-        <a class="button cart" href="./order.html">
-          <i class="uil uil-arrow-left"></i>
-        </a>
-        <a href="./checkout.html" class="button check">
-          <span class="price" id="check-price">$0</span>
-          <span class="confirm" id="check-products">Confirmar (0 Items)</span>
-        </a>
+    <main class="terminal cart">
+      <header class="terminal__footer">
+        <button class="button secondary square">
+          <ion-icon name="chevron-back-outline"></ion-icon>
+        </button>
+        <button class="button tertiary pay">
+          <h3>$0</h3>
+          <p>Confirmar (3 Items)</p>
+        </button>
       </header>
-      <section class="articles" id="cart-wrapper"></section>
+      <div class="terminal__stack_panel" id="foods">
+        <div class="terminal__item row">
+          <img src="../public/products/qpc.png" class="terminal__item__image" alt="">
+          <div class="terminal__item__info">
+            <h2 class="terminal__item__title">Cuarto de libra con queso</h2>
+            <span class="terminal__item__price">$200</span>
+            <section class="terminal__item__footer row">
+              <div class="terminal__item__actions">
+                <div class="terminal__item__actions__counter">
+                  <button class="button square small counter_left">
+                    <ion-icon name="remove-outline"></ion-icon>
+                  </button>
+                  <span class="terminal__item__actions__counter__value">2</span>
+                  <button class="button square small counter_right">
+                    <ion-icon name="add"></ion-icon>
+                  </button>
+                </div>
+                <button class="button square small">
+                  <ion-icon name="trash"></ion-icon>
+                </button>
+              </div>
+            </section>
+          </div>
+        </div>
+        <div class="terminal__item row">
+          <img src="../public/products/qpc.png" class="terminal__item__image" alt="">
+          <div class="terminal__item__info">
+            <h2 class="terminal__item__title">Cuarto de libra con queso</h2>
+            <span class="terminal__item__price">$200</span>
+            <section class="terminal__item__footer row">
+              <div class="terminal__item__actions">
+                <div class="terminal__item__actions__counter">
+                  <button class="button square small counter_left">
+                    <ion-icon name="remove-outline"></ion-icon>
+                  </button>
+                  <span class="terminal__item__actions__counter__value">2</span>
+                  <button class="button square small counter_right">
+                    <ion-icon name="add"></ion-icon>
+                  </button>
+                </div>
+                <button class="button square small">
+                  <ion-icon name="trash"></ion-icon>
+                </button>
+              </div>
+              <div class="terminal__item__combo_info row">
+                <img src="../public/products/coke.png" class="terminal__item__combo_info__image">
+                <img src="../public/products/fries.png" class="terminal__item__combo_info__image">
+              </div>              
+            </section>
+          </div>
+        </div>
+        <div class="terminal__item row">
+          <img src="../public/products/qpc.png" class="terminal__item__image" alt="">
+          <div class="terminal__item__info">
+            <h2 class="terminal__item__title">Cuarto de libra con queso</h2>
+            <span class="terminal__item__price">$200</span>
+            <section class="terminal__item__footer row">
+              <div class="terminal__item__actions">
+                <div class="terminal__item__actions__counter">
+                  <button class="button square small counter_left">
+                    <ion-icon name="remove-outline"></ion-icon>
+                  </button>
+                  <span class="terminal__item__actions__counter__value">2</span>
+                  <button class="button square small counter_right">
+                    <ion-icon name="add"></ion-icon>
+                  </button>
+                </div>
+                <button class="button square small">
+                  <ion-icon name="trash"></ion-icon>
+                </button>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
     </main>
-    <p>
-      Esta pagina web intenta emular el funcionamiento de una terminal de autoservicio de McDonald’s.
-      Es por ello que tambien se intenta emular el tamaño de la pantalla de la misma
-    </p>
+    <p>Esta pagina web intenta emular el funcionamiento de una terminal de autoservicio de McDonald’s.
+    Es por ello que tambien se intenta emular el tamaño de la pantalla de la misma</p>
   </body>
-  <script src="../src/js/cart.js"></script>
 </html>

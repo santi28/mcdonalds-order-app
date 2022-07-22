@@ -122,14 +122,16 @@ body > p {
 .terminal__item__info {
   display: flex;
   flex-direction: column;
-
   justify-content: center;
+  gap: 10px;
 
   height: 100%;
+  width: 100%;
 }
 
 .terminal__item__info .terminal__item__title {
   font-size: 1.125rem;
+  text-align: left;
   color: var(--colors-black);
 }
 
@@ -138,6 +140,15 @@ body > p {
   font-size: 1rem;
   font-style: italic;
   color: var(--colors-black);
+}
+
+.terminal__item__info .terminal__item__footer {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  height: 100%;
 }
 
 .terminal .terminal__title {
@@ -177,6 +188,7 @@ body > p {
   justify-content: center;
   align-items: center;
   
+  flex: 1;
   height: 100%;
   gap: 35px;
 
@@ -193,6 +205,67 @@ body > p {
   font-family: "Outfit";
 
   color: var(--colors-white);
+}
+
+/* Custom Cart Styles */
+.terminal.cart {
+  grid-template-rows: 110px 1fr;
+}
+
+.terminal.cart .terminal__footer {
+  grid-row: 1/2;
+}
+
+.terminal.cart .terminal__stack_panel {
+  grid-row: 2/3;
+  padding-top: 20px;
+}
+
+.terminal__item__combo_info__image {
+  height: 60px;
+}
+
+.terminal__item__actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+
+  justify-self: end;
+  align-self: flex-end;
+}
+
+.terminal__item__actions__counter {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  justify-self: end;
+}
+
+.counter_left {
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+.counter_right {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+
+.terminal__item__actions__counter__value {
+  font-family: 'Outfit';
+  font-size: 1.375rem;
+  height: 100%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  padding: 5px 10px;
 }
 
 /* Component styles */
@@ -227,6 +300,11 @@ body > p {
 .button.square {
   font-size: 1.625rem;
   aspect-ratio: 1 / 1 ;
+}
+
+.button.square.small {
+  padding: 5px;
+  font-size: 1.375rem;
 }
 
 .button.pay {
