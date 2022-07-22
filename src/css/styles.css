@@ -140,6 +140,13 @@ body > p {
   color: var(--colors-black);
 }
 
+.terminal .terminal__title {
+  font-family: 'Outfit';
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: var(--colors-black);
+}
+
 /* Header content styles */
 .terminal .terminal__header {
   grid-column: 1/-1;

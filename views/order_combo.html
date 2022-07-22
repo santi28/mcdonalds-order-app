@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>McDonald Order Terminal</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
+    <link rel="stylesheet" href="../src/css/styles.css">
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  </head>
+  <body>
+    <img src="../public/images/order_terminal.logo.black.svg" alt="">
+    <main class="terminal">
+      <header class="terminal__header">
+        <img src="../public/images/mcdonalds.isologotype.svg" alt="">
+        <button class="button">Recomenzar</button>
+      </header>
+      <div class="terminal__stack_panel" id="foods">
+        <h1 class="terminal__title">1. Seleccione el acompañamiento</h1>
+        <div class="terminal__item row">
+          <img src="../public/products/qpc.png" class="terminal__item__image" alt="">
+          <div class="terminal__item__info">
+            <h2 class="terminal__item__title">Cuarto de libra con queso</h2>
+            <span class="terminal__item__price">$200</span>
+          </div>
+        </div>
+        <div class="terminal__item row">
+          <img src="../public/products/qpc.png" class="terminal__item__image" alt="">
+          <div class="terminal__item__info">
+            <h2 class="terminal__item__title">Cuarto de libra con queso</h2>
+            <span class="terminal__item__price">$200</span>
+          </div>
+        </div>
+        <div class="terminal__item row">
+          <img src="../public/products/qpc.png" class="terminal__item__image" alt="">
+          <div class="terminal__item__info">
+            <h2 class="terminal__item__title">Cuarto de libra con queso</h2>
+            <span class="terminal__item__price">$200</span>
+          </div>
+        </div>
+      </div>
+      <footer class="terminal__footer">
+        <button class="button secondary square">
+          <ion-icon name="cart"></ion-icon>
+        </button>
+        <button class="button tertiary pay">
+          <h3>$0</h3>
+          <p>Confirmar (3 Items)</p>
+        </button>
+      </footer>
+    </main>
+    <p>Esta pagina web intenta emular el funcionamiento de una terminal de autoservicio de McDonald’s.
+    Es por ello que tambien se intenta emular el tamaño de la pantalla de la misma</p>
+  </body>
+</html>
