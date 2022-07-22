@@ -72,7 +72,7 @@ body > p {
   width: 100%;
   overflow-y: auto;
 
-  padding: 0 20px;
+  padding: 0 20px 20px 20px;
 }
 
 .terminal .terminal__category_list {
@@ -82,29 +82,61 @@ body > p {
   width: 100%;
 }
 
-.terminal .terminal__category_item {
+.terminal .terminal__item {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 10px;
 
   width: 150px;
   height: 100%;
   border: 2px solid var(--colors-white-secondary);
 
   border-radius: 10px;
-  padding: 20px;
+  padding: 10px;
 }
 
-.terminal .terminal__category_item > img {
+.terminal .terminal__item.row {
+  flex-direction: row;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  height: fit-content;
+  width: 100%;
+}
+
+.terminal .terminal__item__image {
   height: 82px;
 }
 
-.terminal .terminal__category_item > h2 {
+.terminal .terminal__item__title {
   font-family: 'Outfit';
   text-align: center;
   font-size: .875rem;
   font-weight: bold;
+  color: var(--colors-black);
+}
+
+.terminal__item__info {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+
+  height: 100%;
+}
+
+.terminal__item__info .terminal__item__title {
+  font-size: 1.125rem;
+  color: var(--colors-black);
+}
+
+.terminal__item__info .terminal__item__price {
+  font-family: 'Outfit';
+  font-size: 1rem;
+  font-style: italic;
   color: var(--colors-black);
 }
 
