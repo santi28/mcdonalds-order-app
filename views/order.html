@@ -10,66 +10,37 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
-    <link rel="stylesheet" href="../src/css/styles.css">
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.0.0/animate.min.css"/>
+    <link rel="stylesheet" href="../src/css/styles.css">
+    <link rel="stylesheet" href="../src/css/sweetalert.css">
   </head>
   <body>
     <img src="../public/images/order_terminal.logo.black.svg" alt="">
     <main class="terminal">
       <header class="terminal__header">
         <img src="../public/images/mcdonalds.isologotype.svg" alt="">
-        <button class="button">Recomenzar</button>
+        <button class="button" id="restart">Recomenzar</button>
       </header>
       <div class="terminal__stack_panel" id="foods">
-        <ul class="terminal__category_list">
-          <li class="terminal__item">
-            <img src="../public/products/big_mac.png" class="terminal__item__image">
-            <h2 class="terminal__item__title">Hamburgesas</h2>
-          </li>
-          <li class="terminal__item">
-            <img src="../public/products/fries.png" class="terminal__item__image">
-            <h2 class="terminal__item__title">Acompañamientos</h2>
-          </li>
-          <li class="terminal__item">
-            <img src="../public/products/coke.png" class="terminal__item__image">
-            <h2 class="terminal__item__title">Bebidas</h2>
-          </li>
-        </ul>
-        <div class="terminal__item row">
-          <img src="../public/products/qpc.png" class="terminal__item__image" alt="">
-          <div class="terminal__item__info">
-            <h2 class="terminal__item__title">Cuarto de libra con queso</h2>
-            <span class="terminal__item__price">$200</span>
-          </div>
-        </div>
-        <div class="terminal__item row">
-          <img src="../public/products/qpc.png" class="terminal__item__image" alt="">
-          <div class="terminal__item__info">
-            <h2 class="terminal__item__title">Cuarto de libra con queso</h2>
-            <span class="terminal__item__price">$200</span>
-          </div>
-        </div>
-        <div class="terminal__item row">
-          <img src="../public/products/qpc.png" class="terminal__item__image" alt="">
-          <div class="terminal__item__info">
-            <h2 class="terminal__item__title">Cuarto de libra con queso</h2>
-            <span class="terminal__item__price">$200</span>
-          </div>
-        </div>
+        <ul class="terminal__category_list" id="category-list"></ul>
+        <div class="terminal__food_list" id="food-list"></div>
       </div>
       <footer class="terminal__footer">
         <button class="button secondary square">
           <ion-icon name="cart"></ion-icon>
         </button>
         <button class="button tertiary pay">
-          <h3>$0</h3>
-          <p>Confirmar (3 Items)</p>
+          <h3 id="checkout-price">$0</h3>
+          <p id="checkout-products">Confirmar (0 Items)</p>
         </button>
       </footer>
     </main>
     <p>Esta pagina web intenta emular el funcionamiento de una terminal de autoservicio de McDonald’s.
     Es por ello que tambien se intenta emular el tamaño de la pantalla de la misma</p>
+    <script src="../src/js/order.js"></script>
   </body>
 </html>

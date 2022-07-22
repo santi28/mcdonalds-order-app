@@ -1,0 +1,28 @@
+/* Sweet Alert Styles */
+body.swal2-height-auto {
+  height: 100vh !important
+}
+
+.terminal-swal-container {
+  font-family: 'Outfit';
+
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  position: absolute !important;
+}
+
+.terminal-swal-popup {
+  border-radius: 10px !important;
+}
+
+.animate__fast {
+  animation-duration: 0.2s !important;
+  animation-timing-function: ease-in-out !important;
+}
+
+.disable {
+  cursor: not-allowed !important;
+  filter: grayscale(40%);
+}
