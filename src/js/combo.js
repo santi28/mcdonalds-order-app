@@ -83,10 +83,17 @@ function addProductToCombo ({ product }) {
   localStorage.setItem('combo', JSON.stringify(combo))
 }
 
+function uuidv4 () {
+  return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+  )
+}
+
 function addComboToCart ({ product }) {
   const combo = JSON.parse(localStorage.getItem('combo'))
   const productCombo = { ...product, price: product.priceInCombo }
 
+  combo.id = uuidv4()
   combo.combo.drink = productCombo
   combo.quantity = 1
 
@@ -150,4 +157,9 @@ async function fetchProducts () {
   RenderProductList({ products: sides, caption: '1. Selecciona un acompañamiento' })
 
   updateCheckOut()
+
+  const cartButton = document.getElementById('cart-button')
+  cartButton.addEventListener('click', () => {
+    window.location.href = './cart.html'
+  })
 })()

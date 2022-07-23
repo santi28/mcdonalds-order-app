@@ -137,6 +137,12 @@ function updateCheckOut () {
   checkProducts.textContent = `Confirmar (${totalProducts} Items)`
 }
 
+function uuidv4 () {
+  return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+  )
+}
+
 async function addProductToCart (product) {
   // eslint-disable-next-line no-undef
   const swalResponse = await Swal.fire({
@@ -165,7 +171,7 @@ async function addProductToCart (product) {
 
     // Si el producto no esta en el carrito, lo agrega
     if (!productInCart) {
-      const modifiedProduct = { ...product, quantity: 1 }
+      const modifiedProduct = { id: uuidv4(), ...product, quantity: 1 }
       cart.push(modifiedProduct)
     } else {
       // Si el producto ya esta en el carrito, incrementa la cantidad
@@ -240,5 +246,10 @@ function getCategories (products) {
       localStorage.clear()
       document.location = '../'
     }
+  })
+
+  const cartButton = document.getElementById('cart-button')
+  cartButton.addEventListener('click', () => {
+    window.location.href = './cart.html'
   })
 })()
