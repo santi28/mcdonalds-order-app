@@ -149,6 +149,11 @@ async function fetchProducts () {
     }
   })
 
+  const paymentButton = document.querySelector('#pay-button')
+  paymentButton.addEventListener('click', () => {
+    window.location.href = './checkout.html'
+  })
+
   // Obitiene los datos del combo desde el localStorage
   const combo = JSON.parse(localStorage.getItem('combo'))
   console.log(combo)

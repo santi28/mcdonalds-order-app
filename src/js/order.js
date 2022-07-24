@@ -213,6 +213,11 @@ function getCategories (products) {
   const productsWithCategories = await fetchProducts()
   RenderCategoryList({ categories: getCategories(productsWithCategories), products: productsWithCategories })
 
+  const paymentButton = document.querySelector('#pay-button')
+  paymentButton.addEventListener('click', () => {
+    window.location.href = './checkout.html'
+  })
+
   // Obtiene los productos de cada categoria
   const products = []
   productsWithCategories.forEach(categories => {

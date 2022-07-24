@@ -131,5 +131,10 @@ function rednderCart () {
     window.location.href = './order.html'
   })
 
+  const paymentButton = document.querySelector('#pay-button')
+  paymentButton.addEventListener('click', () => {
+    window.location.href = './checkout.html'
+  })
+
   rednderCart()
 })()
